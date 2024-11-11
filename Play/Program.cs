@@ -11,8 +11,71 @@ namespace Play
     {
         static void Main(string[] args)
         {
+            bool loggedIn = false;
+            do
+            {
+                User user = new User();
+                Console.WriteLine("Вы уже зарегистрированиы? (Введите Yes/No)");
+                string otvet = Console.ReadLine();
+                if (otvet == "Yes")
+                {
+                    Console.WriteLine("nВход в систему:");
+                    Console.Write("Введите логин: ");
+                    string username = Console.ReadLine();
+                    Console.Write("Введите пароль: ");
+                    string password = Console.ReadLine();
+
+                    if (user.Login(username, password))
+                    {
+                        Console.WriteLine("Вход выполнен успешно.");
+                        loggedIn = true; // Выход из цикла
+                    }
+                    else
+                    {
+                        Console.WriteLine("Неверный логин или пароль. Попробуйте снова.");
+                    }
+                }
+                else if (otvet == "No")
+                {
+                    Console.WriteLine("Регистрация нового пользователя:");
+                    Console.Write("Введите логин: ");
+                    string regUsername = Console.ReadLine();
+                    Console.Write("Введите пароль: ");
+                    string regPassword = Console.ReadLine();
+
+                    if (user.Register(regUsername, regPassword))
+                    {
+                        Console.WriteLine("Пользователь зарегистрирован.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Пользователь уже существует.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Введен некорректный ответ");
+                }
+
+                //Console.Write("> ");
+                
+                //switch (command[0])
+                //{
+                //    case "help": Methods.help(clinic, command); break;
+                //    case "list": Methods.list(clinic, command); break;
+                //    case "addPatient": Methods.addPatient(clinic, command); break;
+                //    case "delPatient": Methods.delPatient(clinic, command); break;
+                //    case "setDate": Methods.setDate(clinic, command); break;
+                //}
+            } while (loggedIn == false);
+            StartGame();
+        }
+            
+        static void StartGame()
+        {
+            Work_with_files work = new Work_with_files();
             string filename = "result.txt";
-            List<int> numbers = ReadNumbersFromFile(filename);
+            List<int> numbers = work.ReadNumbersFromFile(filename);
 
             Random random = new Random();
             string generatedNumber = GenerateUniqueNumber(random);
@@ -52,10 +115,10 @@ namespace Play
                         }
                     }
                     Console.ReadKey();
-              }
+                }
             }
-        }
 
+        }
         static string GenerateUniqueNumber(Random random)
         {
             int number;
