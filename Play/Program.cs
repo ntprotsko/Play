@@ -56,17 +56,6 @@ namespace Play
                 {
                     Console.WriteLine("Введен некорректный ответ");
                 }
-
-                //Console.Write("> ");
-                
-                //switch (command[0])
-                //{
-                //    case "help": Methods.help(clinic, command); break;
-                //    case "list": Methods.list(clinic, command); break;
-                //    case "addPatient": Methods.addPatient(clinic, command); break;
-                //    case "delPatient": Methods.delPatient(clinic, command); break;
-                //    case "setDate": Methods.setDate(clinic, command); break;
-                //}
             } while (loggedIn == false);
             StartGame();
         }
