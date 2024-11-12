@@ -9,6 +9,7 @@ namespace Play
 {
     class Program
     {
+        public static readonly string Filename = "users.txt";
         static void Main(string[] args)
         {
             //Цикл для входа и регистрации, если это необходимо
@@ -25,8 +26,8 @@ namespace Play
                     string username = Console.ReadLine();
                     Console.Write("Введите пароль: ");
                     string password = Console.ReadLine();
-
-                    if (user.Login(username, password))
+                    User player = User.Logon(username, password);
+                    if (player!=null)
                     {
                         Console.WriteLine("Вход выполнен успешно.");
                         loggedIn = true; // Выход из цикла
@@ -43,8 +44,8 @@ namespace Play
                     string regUsername = Console.ReadLine();
                     Console.Write("Введите пароль: ");
                     string regPassword = Console.ReadLine();
-
-                    if (user.Register(regUsername, regPassword))
+                    User player = User.Register(regUsername, regPassword);
+                    if (player != null)
                     {
                         Console.WriteLine("Пользователь зарегистрирован.");
                     }

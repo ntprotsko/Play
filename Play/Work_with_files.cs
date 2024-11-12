@@ -32,7 +32,7 @@ namespace Play
                     }
                 }
             }
-            catch (IOException ex)
+            catch (FileNotFoundException ex)
             {
                 Console.WriteLine($"Ошибка при чтении файла: {ex.Message}");
             }
