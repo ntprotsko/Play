@@ -9,13 +9,14 @@ namespace Play
 {
     public class Work_with_files
     {
-        public List<int> ReadNumbersFromFile(string filename)
+        //Метод для чтения предыдущих результатов
+        public List<int> ReadNumbersFromFile(string _filename)
         {
             List<int> numbers = new List<int>();
 
             try
             {
-                using (StreamReader reader = new StreamReader(filename))
+                using (StreamReader reader = new StreamReader(_filename))
                 {
                     string line;
                     while ((line = reader.ReadLine()) != null)
@@ -38,11 +39,12 @@ namespace Play
 
             return numbers;
         }
-        public void WriteNumbersToFile(string filename, List<int> numbers)
+        //Метод для записи списка в файл
+        public void WriteNumbersToFile(string _filename, List<int> _numbers)
         {
-            using (StreamWriter writer = new StreamWriter(filename, false))
+            using (StreamWriter writer = new StreamWriter(_filename, false))
             {
-                foreach (int c in numbers)
+                foreach (int c in _numbers)
                 {
                     writer.WriteLine(c.ToString());
                 }

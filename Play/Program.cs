@@ -11,6 +11,7 @@ namespace Play
     {
         static void Main(string[] args)
         {
+            //Цикл для входа и регистрации, если это необходимо
             bool loggedIn = false;
             do
             {
@@ -19,7 +20,7 @@ namespace Play
                 string otvet = Console.ReadLine();
                 if (otvet == "Yes")
                 {
-                    Console.WriteLine("nВход в систему:");
+                    Console.WriteLine("Вход в систему:");
                     Console.Write("Введите логин: ");
                     string username = Console.ReadLine();
                     Console.Write("Введите пароль: ");
@@ -58,8 +59,8 @@ namespace Play
                 }
             } while (loggedIn == false);
             StartGame();
-        }
-            
+        } 
+        //Механика игры
         static void StartGame()
         {
             Work_with_files work = new Work_with_files();
@@ -70,10 +71,12 @@ namespace Play
             string generatedNumber = GenerateUniqueNumber(random);
             int attempts = 0;
             bool isGuessed = false;
-
             Console.WriteLine("Компьютер сгенерировал четырехзначное число");
+            #if DEBUG
             Console.WriteLine(generatedNumber);
-
+            #else
+            Console.WriteLine();
+            #endif
             while (!isGuessed)
             {
                 Console.Write("Введите ваш вариант: ");
@@ -143,7 +146,6 @@ namespace Play
             }
             return (correctDigits, correctPositions);
         }
-
         static bool IsAllDigits(string str)
         {
             foreach (char c in str)
@@ -152,35 +154,6 @@ namespace Play
                     return false;
             }
             return true;
-        }
-        static List<int> ReadNumbersFromFile(string filename)
-        {
-            List<int> numbers = new List<int>();
-
-            try
-            {
-                using (StreamReader reader = new StreamReader(filename))
-                {
-                    string line;
-                    while ((line = reader.ReadLine()) != null)
-                    {
-                        if (int.TryParse(line, out int number))
-                        {
-                            numbers.Add(number);
-                        }
-                        else
-                        {
-                            Console.WriteLine($"Не удалось преобразовать строку в число: {line}");
-                        }
-                    }
-                }
-            }
-            catch (IOException ex)
-            {
-                Console.WriteLine($"Ошибка при чтении файла: {ex.Message}");
-            }
-
-            return numbers;
         }
         static List<int> Result(List<int> data, int result)
         {
