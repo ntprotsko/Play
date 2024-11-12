@@ -14,9 +14,10 @@ namespace Play
         {
             //Цикл для входа и регистрации, если это необходимо
             bool loggedIn = false;
+            User player;
             do
             {
-                User user = new User();
+                //User user = new User();
                 Console.WriteLine("Вы уже зарегистрированиы? (Введите Yes/No)");
                 string otvet = Console.ReadLine();
                 if (otvet == "Yes")
@@ -26,7 +27,7 @@ namespace Play
                     string username = Console.ReadLine();
                     Console.Write("Введите пароль: ");
                     string password = Console.ReadLine();
-                    User player = User.Logon(username, password);
+                    player = User.Logon(username, password);
                     if (player!=null)
                     {
                         Console.WriteLine("Вход выполнен успешно.");
@@ -44,7 +45,7 @@ namespace Play
                     string regUsername = Console.ReadLine();
                     Console.Write("Введите пароль: ");
                     string regPassword = Console.ReadLine();
-                    User player = User.Register(regUsername, regPassword);
+                    player = User.Register(regUsername, regPassword);
                     if (player != null)
                     {
                         Console.WriteLine("Пользователь зарегистрирован.");
@@ -59,10 +60,10 @@ namespace Play
                     Console.WriteLine("Введен некорректный ответ");
                 }
             } while (loggedIn == false);
-            StartGame();
+            StartGame(player);
         } 
         //Механика игры
-        static void StartGame()
+        static void StartGame(User player)
         {
             Work_with_files work = new Work_with_files();
             string filename = "result.txt";
@@ -100,13 +101,8 @@ namespace Play
                     Console.WriteLine($"Вы угадали число {generatedNumber} за {attempts} попыток.");
                     numbers = Result(numbers, attempts);
 
-                    using (StreamWriter writer = new StreamWriter(filename, false))
-                    {
-                        foreach (int c in numbers)
-                        {
-                            writer.WriteLine(c.ToString());
-                        }
-                    }
+                    work.WriteNumbersToFile(filename, numbers);
+                    User.UpdateHistory(player.Login, player.Password, player.History);
                     Console.ReadKey();
                 }
             }
