@@ -14,10 +14,9 @@ namespace Play
         {
             //Цикл для входа и регистрации, если это необходимо
             bool loggedIn = false;
-            User player;
+            User player = null;
             do
             {
-                //User user = new User();
                 Console.WriteLine("Вы уже зарегистрированиы? (Введите Yes/No)");
                 string otvet = Console.ReadLine();
                 if (otvet == "Yes")
@@ -65,6 +64,7 @@ namespace Play
         //Механика игры
         static void StartGame(User player)
         {
+            List<int> history = player.History;
             Work_with_files work = new Work_with_files();
             string filename = "result.txt";
             List<int> numbers = work.ReadNumbersFromFile(filename);
@@ -100,9 +100,10 @@ namespace Play
                     isGuessed = true;
                     Console.WriteLine($"Вы угадали число {generatedNumber} за {attempts} попыток.");
                     numbers = Result(numbers, attempts);
-
                     work.WriteNumbersToFile(filename, numbers);
-                    User.UpdateHistory(player.Login, player.Password, player.History);
+                    history.Add(attempts);
+                    User.UpdateHistory(player.Login, player.Password, history);
+                    User.TheRecord(player);
                     Console.ReadKey();
                 }
             }
@@ -160,5 +161,6 @@ namespace Play
             Console.WriteLine("Вы заняли {0} место из {1}", res, data.Count);
             return data;
         }
+        
     }
 }

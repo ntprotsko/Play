@@ -10,7 +10,6 @@ namespace Play
 {
     public class User
     {
-        //public string Login;
         public string Login { get; set; }
         public string Password { get; set; }
         public List<int> History { get; set; }
@@ -49,6 +48,13 @@ namespace Play
             File.AppendAllText(Program.Filename, $"{username};{password};-1" + "\n");
             return new User(username, password, history);
         }
+        public static void TheRecord (User user)
+        {
+            List<int> history = user.History;
+            history.Remove(-1);
+            
+            Console.WriteLine($"Рекорд пользователя {user.Login} - {history.Min()}");
+        }
 
         private static bool UserExists(string username)
         {
@@ -70,6 +76,7 @@ namespace Play
         }
         static public void UpdateHistory(string username, string password, List<int> history)
         {
+            //string historyNew = string.Join(",", history);
             // Читаем все строки из файла
             var lines = File.ReadAllLines(Program.Filename).ToList();
 
@@ -78,7 +85,7 @@ namespace Play
                 var fields = lines[i].Split(';');
 
                 // Проверяем, что у нас достаточно полей
-                if (fields[0] == username && fields[1] == password)
+                if (fields.Length >= 3 && fields[0] == username && fields[1] == password)
                 {
                     // Обновляем историю
                     fields[2] = string.Join(",", history);
@@ -86,6 +93,7 @@ namespace Play
                     break; // Выходим из цикла после обновления
                 }
             }
+            File.WriteAllLines(Program.Filename, lines);
         }
     }
 }

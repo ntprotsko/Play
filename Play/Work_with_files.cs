@@ -49,7 +49,6 @@ namespace Play
                     writer.WriteLine(c.ToString());
                 }
             }
-            Console.ReadKey();
         }
     }
 }
